@@ -1,0 +1,21 @@
+[package]
+name = "mlsql-app-store"
+version = "0.1.0"
+authors = ["WilliamZhu <allwefantasy@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name="store_app"
+
+[lib]
+name = "mlsql_app_store"
+
+[dependencies]
+rocket = "0.4.2"
+vlog = "0.1.4"
+clap = "2.32"
+reqwest = "0.9.19"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+futures-preview = { version = "=0.3.0-alpha.17", features = ["async-await", "nightly"] }
