@@ -12,6 +12,7 @@ name="store_app"
 name = "mlsql_app_store"
 
 [dependencies]
+toml = "0.2"
 rocket = "0.4.2"
 vlog = "0.1.4"
 clap = "2.32"
@@ -19,3 +20,7 @@ reqwest = "0.9.19"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 futures-preview = { version = "=0.3.0-alpha.17", features = ["async-await", "nightly"] }
+
+[dependencies.mysql]
+version = "7.0"
+default-features = false

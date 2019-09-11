@@ -9,3 +9,4 @@ extern crate serde;
 extern crate vlog;
 
 pub mod controller;
+pub mod base;

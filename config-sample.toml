@@ -1,0 +1,15 @@
+app_path = "http://localhost:3000"
+static_path = "http://localhost:3000/static"
+cookie_sign_key = "test"
+listen = "localhost:3000"
+
+[database]
+host = "localhost"
+port = 3306
+user = "user"
+password = "password"
+name = "db_name"
+
+[github]
+client_id = "github_client_id"
+client_secret = "github_client_secret"
