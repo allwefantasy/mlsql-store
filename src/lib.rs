@@ -8,6 +8,6 @@ extern crate rocket;
 extern crate serde;
 extern crate vlog;
 
-pub mod controller;
 pub mod base;
+pub mod controller;
 pub mod model;

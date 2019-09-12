@@ -1,9 +1,8 @@
-use mysql as my;
 use crate::base::config::Config;
+use mysql as my;
 use std::error::Error;
 use std::future::Future as StdFuture;
 use std::sync::mpsc::{channel, Sender};
-
 
 pub struct MyPool(my::Pool);
 
@@ -18,7 +17,8 @@ impl MyPool {
         let port = db_config.get("port").unwrap().as_integer().unwrap();
 
         let mut builder = my::OptsBuilder::default();
-        builder.user(Some(user))
+        builder
+            .user(Some(user))
             .pass(Some(password))
             .ip_or_hostname(Some(host))
             .tcp_port(port as u16)
@@ -31,9 +31,11 @@ impl MyPool {
         self.0.clone()
     }
 
-    pub fn future_exec<F, R, T>(&self, callback: F) -> Result<T, my::error::Error> where
-        R: StdFuture<Output=()>,
-        F: FnOnce(Sender<Result<T, my::error::Error>>) -> R {
+    pub fn future_exec<F, R, T>(&self, callback: F) -> Result<T, my::error::Error>
+    where
+        R: StdFuture<Output = ()>,
+        F: FnOnce(Sender<Result<T, my::error::Error>>) -> R,
+    {
         let (tx, rx) = channel();
         let tx_c = tx.clone();
         let wow = callback(tx_c);
