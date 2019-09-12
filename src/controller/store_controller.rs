@@ -43,7 +43,8 @@ pub enum PathResp { File(PathBuf), ErrorMessage(String) }
 impl Responder<'static> for PathResp {
     fn respond_to(self, req: &Request) -> Result<Response<'static>, Status> {
         match self {
-            PathResp::File(path) => NamedFile::open(path).ok().respond_to(req),
+            PathResp::File(path) =>
+                NamedFile::open(path).ok().respond_to(req),
             PathResp::ErrorMessage(msg) => {
                 content::Plain(msg).respond_to(req)
             }
@@ -53,7 +54,7 @@ impl Responder<'static> for PathResp {
 
 
 #[post("/repo/plugins/download", data = "<req>")]
-pub fn download_plugin(db: State<MyPool>, req: Form<DownloadReq>) -> PathResp {
+pub fn download_plugin(db: State<MyPool>, req: Form<DownloadReq>) -> Option<NamedFile> {
     let db_ref = db.value();
     let name = &req.name.clone();
     let query = async move |tx_c: Sender<Result<Vec<PluginsStore>, my::error::Error>>| {
@@ -71,9 +72,13 @@ pub fn download_plugin(db: State<MyPool>, req: Form<DownloadReq>) -> PathResp {
     //let file = File::open(&res[0].location);
     //file.map(|x| Stream::from(x))
     let zero: usize = 0;
-    if &res.len() > &zero { PathResp::File(PathBuf::from(&res[0].location)) } else {
-        PathResp::ErrorMessage(String::from(format!("{} is not exists", name)))
-    }
+//    if &res.len() > &zero {
+//        //PathResp::File(PathBuf::from()
+//        NamedFile::open(&res[0].location).ok()
+//    } else {
+//        PathResp::ErrorMessage(String::from(format!("{} is not exists", name)))
+//    }
+    NamedFile::open(&res[0].location).ok()
 }
 
 #[derive(Debug, Serialize, Deserialize)]
