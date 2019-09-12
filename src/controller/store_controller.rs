@@ -48,7 +48,6 @@ impl Responder<'static> for PathResp {
                 Response::build_from(NamedFile::open(&path).ok().respond_to(req)?)
                     .raw_header("ContentType", "application/octet-stream")
                     .raw_header("Content-Disposition", cd)
-                    .raw_header("Transfer-Encoding", "chunked")
                     .ok()
             }
             PathResp::ErrorMessage(msg) => {
