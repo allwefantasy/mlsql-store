@@ -17,10 +17,9 @@ fn main() {
         .address("localhost")
         .port(8001)
         .finalize().unwrap();
-    //.mount("/public", StaticFiles::from("/static"))
     rocket::custom(server_config).manage(db).mount("/", routes![
     controller::store_controller::index,
     controller::store_controller::download_plugin,
     controller::store_controller::plugin_store_list
-    ]).launch();
+    ]).mount("/public", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/static"))).launch();
 }
