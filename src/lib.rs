@@ -10,3 +10,4 @@ extern crate vlog;
 
 pub mod controller;
 pub mod base;
+pub mod model;
