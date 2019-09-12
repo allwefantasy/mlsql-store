@@ -44,7 +44,7 @@ impl Responder<'static> for PathResp {
     fn respond_to(self, req: &Request) -> Result<Response<'static>, Status> {
         match self {
             PathResp::File(path) => {
-                let cd = format!("attachment;filename={}", &path.file_name().unwrap().to_str().unwrap());
+                let cd = format!("attachment;filename=\"{}\"", &path.file_name().unwrap().to_str().unwrap());
                 Response::build_from(NamedFile::open(&path).ok().respond_to(req)?)
                     .raw_header("ContentType", "application/octet-stream")
                     .raw_header("Content-Disposition", cd)
