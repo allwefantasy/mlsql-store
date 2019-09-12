@@ -14,6 +14,7 @@ name = "mlsql_app_store"
 [dependencies]
 toml = "0.2"
 rocket = "0.4.2"
+rocket_contrib = "0.4.2"
 vlog = "0.1.4"
 clap = "2.32"
 reqwest = "0.9.19"
@@ -24,3 +25,7 @@ futures-preview = { version = "=0.3.0-alpha.17", features = ["async-await", "nig
 [dependencies.mysql]
 version = "7.0"
 default-features = false
+
+
+[target.x86_64-unknown-linux-musl]
+linker = "x86_64-linux-musl-gcc"
