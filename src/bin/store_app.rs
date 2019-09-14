@@ -40,9 +40,9 @@ fn main() {
         .address(host)
         .port(port.parse::<u16>().unwrap())
         .finalize().unwrap();
-    rocket::custom(server_config).manage(db).mount("/", routes![
+    rocket::custom(server_config).manage(db).mount("/api", routes![
     controller::store_controller::index,
     controller::store_controller::download_plugin,
     controller::store_controller::plugin_list
-    ]).mount("/public", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/static"))).launch();
+    ]).mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/static"))).launch();
 }
