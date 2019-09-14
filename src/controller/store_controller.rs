@@ -18,11 +18,11 @@ pub fn index() -> &'static str {
     "Hello, world!"
 }
 
-#[get("/repo/plugins?<name>")]
-pub fn plugin_store_list(db: State<MyPool>, name: String) -> content::Json<String> {
+#[get("/repo/plugins?<plugin_type>")]
+pub fn plugin_list(db: State<MyPool>, plugin_type: String) -> content::Json<String> {
     let db_ref = db.value();
-    let sql = "select id,name,location,official,enable from plugins_store where enable=?";
-    let res = PluginsStore::query(&db, sql, (0, ));
+    let sql = "select * from plugins_store where enable=? and plugin_type=?";
+    let res = PluginsStore::query(&db, sql, (0, plugin_type.parse::<i32>().unwrap()));
     match res {
         Ok(item) => content::Json(serde_json::to_string(&item).unwrap()),
         Err(e) => content::Json(String::from("[]")),
@@ -34,7 +34,7 @@ pub fn plugin_store_list(db: State<MyPool>, name: String) -> content::Json<Strin
 pub fn download_plugin(db: State<MyPool>, req: Form<DownloadReq>) -> PathResp {
     let db_ref = db.value();
     let name = &req.name.clone();
-    let res: Vec<PluginsStore> = PluginsStore::query(&db, "select id,name,location,official,enable from plugins_store where name=?", (&req.name, )).unwrap();
+    let res: Vec<PluginsStore> = PluginsStore::query(&db, "select * from plugins_store where name=?", (&req.name, )).unwrap();
     let zero: usize = 0;
     if &res.len() > &zero {
         PathResp::File(PathBuf::from(&res[0].location))

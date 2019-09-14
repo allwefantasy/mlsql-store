@@ -7,6 +7,7 @@ extern crate reqwest;
 extern crate rocket;
 extern crate serde;
 extern crate vlog;
+extern crate rustc_serialize;
 
 pub mod controller;
 pub mod base;
