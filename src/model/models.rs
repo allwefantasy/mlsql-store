@@ -27,6 +27,7 @@ pub enum PluginType {
     ET = 0,
     DataSource = 1,
     SCRIPT = 2,
+    APP = 3,
 }
 
 impl PluginType {
@@ -35,6 +36,7 @@ impl PluginType {
             0 => PluginType::ET,
             1 => PluginType::DataSource,
             2 => PluginType::SCRIPT,
+            3 => PluginType::APP,
             _ => PluginType::ET
         }
     }
